@@ -1,0 +1,15 @@
+{
+    "id": "layers",
+    "name": "Lots O' Layers",
+    "author": ["lizzie rushpy"],
+    "description": "Periodic updates with varying themes ^^",
+    "prefix": "lots",
+    
+    "main_file": "mod.lua",
+    "priority": 0,
+
+    "badge_colour": "644DD6",
+    "badge_text_colour": "FFFFFF",
+
+    "version": "0.0.1~pre"
+}
