@@ -1,6 +1,16 @@
 local en_us = {
     descriptions = {
-        Joker = {}
+        Joker = {},
+        Other = {
+            lol_reload_popup = {
+                text = {
+                    "Bundle settings",
+                    "have been {C:attention}changed",
+                    "Exiting this menu will",
+                    "force a {C:red}restart",
+                }
+            }
+        },
     },
 
     misc = {
