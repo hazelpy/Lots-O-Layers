@@ -9,6 +9,18 @@ local en_us = {
                     "Exiting this menu will",
                     "force a {C:red}restart",
                 }
+            },
+            lol_test_bundle = {
+                name = "Test Bundle",
+                text = {
+                    "Testing description",
+                },
+            },
+            lol_test_bundle_two = {
+                name = "Test Bundle 2",
+                text = {
+                    "{X:mult,C:white}Xmult{} text",
+                },
             }
         },
     },
@@ -21,6 +33,7 @@ local en_us = {
             b_lol_bundle_select = "Content Bundles",
             b_lol_enable_bundle = "Enable",
             b_lol_disable_bundle = "Disable",
+            k_lol_disabled = "Disabled"
         }
     }
 };

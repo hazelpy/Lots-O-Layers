@@ -74,10 +74,13 @@ end
 LOL.bundle_display_UIdef = function()
 	local keys = LOL.content_bundles[LOL.current_bundle_page].display
 	local enabled = LOL.content_bundles[LOL.current_bundle_page].enabled
+	local loc_key = "lol_" .. LOL.content_bundles[LOL.current_bundle_page].key
+	local name_nodes =
+		localize({ type = "name", key = loc_key, set = "Other", name_nodes = {}, vars = {}, fixed_scale = 1.3 })
 	local display = {
 		n = G.UIT.T,
 		config = {
-			text = "Disabled",
+			text = localize("k_lol_disabled"),
 			scale = 1,
 			colour = G.C.WHITE,
 		},
@@ -118,6 +121,11 @@ LOL.bundle_display_UIdef = function()
 		nodes = {
 			{
 				n = G.UIT.R,
+				config = { align = "cm", padding = 0.05 },
+				nodes = name_nodes,
+			},
+			{
+				n = G.UIT.R,
 				config = {
 					colour = G.C.BLACK,
 					padding = 0.1,
@@ -133,13 +141,28 @@ LOL.bundle_display_UIdef = function()
 			},
 			{
 				n = G.UIT.R,
-				config = { minh = 0.1 },
+				config = { padding = 0.1, align = "cm" },
+				nodes = {
+                    {
+                        n = G.UIT.C,
+                        config = { align = "cm" },
+                        nodes = {
+                            LOL.create_localized_rows(nil, loc_key, { minw = 4.5, minh = 1.8 })
+                        }
+                    },
+                    {
+                        n = G.UIT.C,
+                        config = {},
+                    },
+					UIBox_button({
+						button = "lol_toggle_bundle",
+						label = { localize(enabled and "b_lol_disable_bundle" or "b_lol_enable_bundle") },
+						colour = enabled and G.C.RED or G.C.GREEN,
+                        minh = 1.4,
+						col = true,
+					}),
+				},
 			},
-			UIBox_button({
-				button = "lol_toggle_bundle",
-				label = { localize(enabled and "b_lol_disable_bundle" or "b_lol_enable_bundle") },
-				colour = enabled and G.C.RED or G.C.GREEN,
-			}),
 		},
 	}
 end
@@ -154,7 +177,6 @@ function LOL.create_localized_rows(set, key, args)
 		key = key,
 		nodes = desc_nodes,
 		fixed_scale = args.text_scale,
-		scale = args.text_scale,
 		text_colour = args.text_colour,
 		vars = args.loc_vars or {},
 	})
@@ -208,7 +230,7 @@ function LOL.update_restart_popup()
 				align = "tri",
 				instance_type = "ALERT",
 				r_bond = "Weak",
-				offset = { x = 1.5, y = -0.8 },
+				offset = { x = 1.6, y = -0.4 },
 			},
 		})
 		G.lol_restart_popup.T.r = 0.1
