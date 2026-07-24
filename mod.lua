@@ -31,7 +31,7 @@ LOL.content_bundles = {
         },
     
         -- requires = { "bundle_name" }, --- Any other content bundles that this one needs enabled
-        display = { "c_strength" },
+        display = { "c_strength", "c_hermit", "c_emperor" },
         enabled = true
     },
     {
