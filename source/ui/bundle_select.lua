@@ -71,6 +71,16 @@ G.FUNCS.lol_bundle_select_page = function(args)
 	})
 end
 
+LOL.is_current_bundle_loaded = function()
+    for _, key in ipairs(LOL.loaded_content_bundles) do
+        if key == LOL.content_bundles[LOL.current_bundle_page].key then 
+            return true
+        end
+    end
+
+    return false
+end
+
 LOL.bundle_display_UIdef = function()
 	local keys = LOL.content_bundles[LOL.current_bundle_page].display
 	local enabled = LOL.content_bundles[LOL.current_bundle_page].enabled
@@ -82,33 +92,46 @@ LOL.bundle_display_UIdef = function()
 		config = {
 			text = localize("k_lol_disabled"),
 			scale = 1,
-			colour = G.C.WHITE,
+			colour = G.C.L_BLACK,
 		},
 	}
+
+    local bundle_is_loaded = LOL.is_current_bundle_loaded();
 	if enabled then
-		local area = CardArea(
-			G.ROOM.T.x + 0.2 * G.ROOM.T.w / 2,
-			G.ROOM.T.h,
-			4.25 * G.CARD_W,
-			G.CARD_H,
-			{ card_limit = #keys, type = "title_2", highlight_limit = 0, collection = true }
-		)
-		for _, key in ipairs(keys) do
-			local card =
-				Card(area.T.x + area.T.w / 2, area.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS[key], {
-					bypass_discovery_center = true,
-					bypass_lock = true,
-					bypass_discovery_ui = true,
-				})
-			card.no_ui = true
-			area:emplace(card)
-		end
-		display = {
-			n = G.UIT.O,
-			config = {
-				object = area,
-			},
-		}
+        if bundle_is_loaded then
+            local area = CardArea(
+                G.ROOM.T.x + 0.2 * G.ROOM.T.w / 2,
+                G.ROOM.T.h,
+                4.25 * G.CARD_W,
+                G.CARD_H,
+                { card_limit = #keys, type = "title_2", highlight_limit = 0, collection = true }
+            )
+            for _, key in ipairs(keys) do
+                local card =
+                    Card(area.T.x + area.T.w / 2, area.T.y, G.CARD_W, G.CARD_H, G.P_CARDS.empty, G.P_CENTERS[key], {
+                        bypass_discovery_center = true,
+                        bypass_lock = true,
+                        bypass_discovery_ui = true,
+                    })
+                card.no_ui = true
+                area:emplace(card)
+            end
+            display = {
+                n = G.UIT.O,
+                config = {
+                    object = area,
+                },
+            }
+        else
+            display = {
+                n = G.UIT.T,
+                config = {
+                    text = localize("k_lol_will_preview"),
+                    scale = 0.6,
+                    colour = G.C.L_BLACK,
+                },
+            }
+        end
 	end
 
 	return {

@@ -28,10 +28,11 @@ LOL.content_bundles = {
         key = "test_bundle",
         content_paths = {
             -- " ... " --- Path to file that must load
+            "source/content/test_bundle"
         },
     
         -- requires = { "bundle_name" }, --- Any other content bundles that this one needs enabled
-        display = { "c_strength", "c_hermit", "c_emperor" },
+        display = { "j_lots_test" },
         enabled = true,
         colour = G.C.RED,
     },
@@ -53,10 +54,11 @@ function LOL.load_content_bundle_config()
     LOL.config = LOL.config or {}
     LOL.config.content_bundles = LOL.config.content_bundles or {}
     for key, enabled in pairs(LOL.config.content_bundles) do
-        for _, bundle in ipairs(LOL.content_bundles) do
+        for index, bundle in ipairs(LOL.content_bundles) do
             if bundle.key == key then bundle.enabled = enabled end
         end
     end
+    print(LOL.content_bundles);
 end
 
 --- Loading
@@ -84,6 +86,7 @@ function LOL.load_source_index()
 end
 
 function LOL.load_content_bundles()
+    LOL.loaded_content_bundles = {}
     for _, bundle in ipairs(LOL.content_bundles) do
         if bundle.enabled then
             print("Loading content bundle with key '" .. bundle.key .. "'...")
@@ -99,6 +102,8 @@ function LOL.load_content_bundles()
                     end
                 end
             end
+
+            LOL.loaded_content_bundles[#LOL.loaded_content_bundles+1] = bundle.key
         end
     end
 end
@@ -137,16 +142,3 @@ function LOL.get_loaded_loc(loc_table, lang)
 
     return loc_table;
 end
-
-SMODS.Joker({
-    key = "test",
-    lol_bundle = "test_bundle",
-    lol_art_credit = "lizzie",
-    lol_code_credit = "ThunderEdge",
-    loc_txt = {
-        name = "Test Joker",
-        text = {
-            "Does nothing",
-        }
-    }
-})
