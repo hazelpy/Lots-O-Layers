@@ -32,7 +32,8 @@ LOL.content_bundles = {
     
         -- requires = { "bundle_name" }, --- Any other content bundles that this one needs enabled
         display = { "c_strength", "c_hermit", "c_emperor" },
-        enabled = true
+        enabled = true,
+        colour = G.C.RED,
     },
     {
         name = "Test Bundle 2",
@@ -43,7 +44,8 @@ LOL.content_bundles = {
     
         -- requires = { "bundle_name" }, --- Any other content bundles that this one needs enabled
         display = { "c_death" },
-        enabled = true
+        enabled = true,
+        colour = G.C.BLUE
     }
 }
 
@@ -135,3 +137,16 @@ function LOL.get_loaded_loc(loc_table, lang)
 
     return loc_table;
 end
+
+SMODS.Joker({
+    key = "test",
+    lol_bundle = "test_bundle",
+    lol_art_credit = "lizzie",
+    lol_code_credit = "ThunderEdge",
+    loc_txt = {
+        name = "Test Joker",
+        text = {
+            "Does nothing",
+        }
+    }
+})
