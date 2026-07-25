@@ -33,7 +33,8 @@ local en_us = {
             b_lol_bundle_select = "Content Bundles",
             b_lol_enable_bundle = "Enable",
             b_lol_disable_bundle = "Disable",
-            k_lol_disabled = "Disabled"
+            k_lol_disabled = "Disabled",
+            k_lol_from = "From"
         }
     }
 };
