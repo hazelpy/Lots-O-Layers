@@ -7,7 +7,8 @@ LOL.source_index = {
     --- Add file paths (or folders) here to load them automatically
     --- "FUCK.lua"
     
-    "source/ui"
+    "source/ui",
+    "source/content"
 };
 
 -- TODO: implement bundle select
@@ -24,6 +25,19 @@ LOL.content_bundles = {
     --     enabled = true
     -- }
     {
+        name = "Picnic Basket",
+        key = "picnic_basket",
+        content_paths = {
+            -- " ... " --- Path to file that must load
+            "source/content/picnic_basket"
+        },
+    
+        -- requires = { "bundle_name" }, --- Any other content bundles that this one needs enabled
+        display = { "j_lots_joke" },
+        enabled = true,
+        colour = G.C.ORANGE,
+    },
+    {
         name = "Test Bundle",
         key = "test_bundle",
         content_paths = {
@@ -36,18 +50,6 @@ LOL.content_bundles = {
         enabled = true,
         colour = G.C.RED,
     },
-    {
-        name = "Test Bundle 2",
-        key = "test_bundle_two",
-        content_paths = {
-            -- " ... " --- Path to file that must load
-        },
-    
-        -- requires = { "bundle_name" }, --- Any other content bundles that this one needs enabled
-        display = { "c_death" },
-        enabled = true,
-        colour = G.C.BLUE
-    }
 }
 
 function LOL.load_content_bundle_config()
@@ -58,7 +60,6 @@ function LOL.load_content_bundle_config()
             if bundle.key == key then bundle.enabled = enabled end
         end
     end
-    print(LOL.content_bundles);
 end
 
 --- Loading
@@ -67,7 +68,8 @@ function LOL.load_file(path)
 
     local helper, load_error = SMODS.load_file("./" .. path)
     if not load_error and type(helper) == "function" then
-        LOL.load_results[#LOL.load_results + 1] = { path = path, result = helper() };
+        local result = helper();
+        LOL.load_results[#LOL.load_results + 1] = { path = path, result = result };
     end
 end
 
@@ -81,6 +83,18 @@ function LOL.load_source_index()
             for _, filename in ipairs(files) do
                 LOL.load_file(path .. "/" .. filename);
             end
+        end
+    end
+end
+
+function LOL.load_any(path)
+    if string.sub(path, #path - 3, #path) == ".lua" then
+        LOL.load_file(path);
+    else
+        local files = NFS.getDirectoryItems(LOL.path .. path)
+        
+        for _, filename in ipairs(files) do
+            LOL.load_file(path .. "/" .. filename);
         end
     end
 end
@@ -137,8 +151,22 @@ end
 function LOL.get_loaded_loc(loc_table, lang)
     for _, v in ipairs(LOL.load_results) do
         local entry = v.result;
-        if entry and entry[lang] then loc_table = LOL.load_loc_entry(entry, loc_table, lang) end
+        if entry and entry[lang] then
+            loc_table = LOL.load_loc_entry(entry, loc_table, lang) 
+        end
     end
 
     return loc_table;
 end
+
+LOL.custom_localization_flag = false;
+G.E_MANAGER:add_event(Event({
+    trigger = "after",
+    func = function(e)
+        LOL.custom_localization_flag = true;
+        G:set_language()
+        G:init_item_prototypes()
+        
+        return true;
+    end
+}))

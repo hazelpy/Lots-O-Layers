@@ -4,6 +4,7 @@
     "author": ["lizzie rushpy"],
     "description": "Periodic updates with varying themes ^^",
     "prefix": "lots",
+    "no_marquee": true,
     
     "main_file": "mod.lua",
     "priority": 0,

@@ -10,16 +10,18 @@ local en_us = {
                     "force a {C:red}restart",
                 }
             },
+            lol_picnic_basket = {
+                name = "Picnic Basket",
+                text = {
+                    "All the finest {C:attention}delicacies",
+                    "a Joker could ever want...",
+                    "{C:inactive}Theme: {C:dark_edition,E:1}Food and Drinks"
+                },
+            },
             lol_test_bundle = {
                 name = "Test Bundle",
                 text = {
                     "Testing description",
-                },
-            },
-            lol_test_bundle_two = {
-                name = "Test Bundle 2",
-                text = {
-                    "{X:mult,C:white}Xmult{} text",
                 },
             }
         },
@@ -39,6 +41,9 @@ local en_us = {
     }
 };
 
-en_us = LOL.get_loaded_loc(en_us, "en_us");
+if LOL.custom_localization_flag then
+    en_us = LOL.get_loaded_loc(en_us, "en_us");
+end
+
 return en_us;
 
