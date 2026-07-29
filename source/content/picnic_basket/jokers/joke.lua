@@ -1,14 +1,15 @@
-SMODS.Joker({
+SMODS.Joker {
     key = "joke",
     lol_bundle = "picnic_basket",
     lol_art_credit = "Lizzie",
     lol_code_credit = "Lizzie",
 
     atlas = "picnic_FoodJokers",
-    pos = { x = 0, y = 0},
+    pos = { x = 0, y = 0 },
     rarity = 2,
     cost = 6,
 
+    blueprint_compat = true,
     perishable_compat = true,
     eternal_compat = false,
 
@@ -34,8 +35,10 @@ SMODS.Joker({
     calculate = function (self, card, context)
         if context.using_consumeable then
             if card.ability.extra.tags_remaining > 0 then
-                card.ability.extra.tags_remaining = card.ability.extra.tags_remaining - 1
-            
+                if not context.blueprint then
+                    card.ability.extra.tags_remaining = card.ability.extra.tags_remaining - 1
+                end
+
                 return {
                     func = function(e)
                         add_tag({key = get_next_tag_key(self.key)})
@@ -45,7 +48,7 @@ SMODS.Joker({
                         return true;
                     end,
 
-                    extra = (card.ability.extra.tags_remaining < 1) and {
+                    extra = ((card.ability.extra.tags_remaining < 1) and not context.blueprint) and {
                         pre_func = function()
                             SMODS.destroy_cards(card, nil, nil, true)
                             return true;
@@ -58,7 +61,7 @@ SMODS.Joker({
             end
         end
     end
-})
+}
 
 return {
     en_us = {

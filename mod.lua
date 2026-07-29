@@ -33,7 +33,7 @@ LOL.content_bundles = {
         },
     
         -- requires = { "bundle_name" }, --- Any other content bundles that this one needs enabled
-        display = { "j_lots_joke" },
+        display = { "j_lots_joke", "j_lots_flan" },
         enabled = true,
         colour = G.C.ORANGE,
     },
