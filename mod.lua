@@ -11,7 +11,6 @@ LOL.source_index = {
     "source/content"
 };
 
--- TODO: implement bundle select
 LOL.content_bundles = {
     -- Add groups of source to load
     -- {
@@ -33,7 +32,7 @@ LOL.content_bundles = {
         },
     
         -- requires = { "bundle_name" }, --- Any other content bundles that this one needs enabled
-        display = { "j_lots_joke", "j_lots_flan" },
+        display = { "j_lots_joke", "j_lots_flan", "j_lots_avocado" },
         enabled = true,
         colour = G.C.ORANGE,
     },
